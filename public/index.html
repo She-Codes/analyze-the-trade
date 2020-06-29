@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Analyze the Trade</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="build/styles.css" />
+  </head>
+  <body class="py-2 font-body">
+    <div id="app" class="mx-auto w-9/12">
+      <h1 class="text-xl uppercase font-bold">Analyze the Trade</h1>
+
+      <form class="mt-4">
+        <h3 class="mt-5 mb-2 text-xl uppercase underline font-medium">
+          Entry
+        </h3>
+        <input
+          v-model="entry"
+          class="border-black border-solid border-2 rounded px-1"
+        />
+
+        <h3 class="mt-5 mb-2 text-xl uppercase underline font-medium">
+          Stop
+        </h3>
+
+        <section class="grid items-center stop">
+          <label for="stop-entry" class="text-sm">Entry</label>
+          <div></div>
+          <label for="atr" class="text-sm">ATR</label>
+          <div></div>
+          <div></div>
+          <div></div>
+          <label for="stop" class="text-sm">Stop</label>
+
+          <input
+            v-model="entry"
+            id="stop-entry"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+          <span class="mx-1">-</span>
+          <input
+            v-model="atr"
+            id="atr"
+            class="border-black border-solid border-2 rounded px-1"
+          />
+          <span class="mx-1">*</span>
+          <span>.20</span>
+          <span class="mx-1">=</span>
+          <input
+            v-model="stop"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+        </section>
+
+        <h3 class="mt-5 mb-2 text-xl uppercase underline font-medium">
+          Reward
+        </h3>
+
+        <section class="reward grid items-center">
+          <label for="proximal-sellers">Proximal Sellers</label>
+          <div></div>
+          <label for="reward-entry">Entry</label>
+          <div></div>
+          <label for="reward">Reward</label>
+          <input
+            v-model="sellers"
+            id="proximal-sellers"
+            class="border-black border-solid border-2 rounded px-1"
+          />
+          <span class="mx-1">-</span>
+          <input
+            v-model="entry"
+            id="reward-entry"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+          <span class="mx-1">=</span>
+          <input
+            v-model="reward"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+        </section>
+
+        <h3 class="mt-5 mb-2 text-xl uppercase underline font-medium">
+          Risk
+        </h3>
+
+        <section class="grid risk items-center">
+          <label for="risk-entry">Entry</label>
+          <div></div>
+          <label for="risk-stop">Stop</label>
+          <div></div>
+          <label for="risk">Risk</label>
+
+          <input
+            v-model="entry"
+            id="risk-entry"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+          <span class="mx-1">-</span>
+          <input
+            v-model="stop"
+            id="risk-stop"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+          <span class="mx-1">=</span>
+          <input
+            v-model="risk"
+            id="risk"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+        </section>
+
+        <h3 class="mt-5 mb-2 text-xl uppercase underline font-medium">
+          Ratio
+        </h3>
+
+        <section class="grid ratio items-center">
+          <label for="ratio-reward">Reward</label>
+          <div></div>
+          <label for="ratio-risk">Risk</label>
+          <div></div>
+          <label for="ratio">Ratio</label>
+
+          <input
+            v-model="reward"
+            id="ratio-reward"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+          <span class="mx-1">/</span>
+          <input
+            v-model="risk"
+            id="ratio-risk"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+          <span class="mx-1">=</span>
+          <input
+            v-model="ratio"
+            id="ratio"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+        </section>
+
+        <h3 class="mt-5 mb-2 text-xl uppercase underline font-medium">
+          Odds
+        </h3>
+
+        <div class="odds grid col-gap-10 row-gap-3">
+          <div></div>
+          <div class="text-xl font-medium border-b">2</div>
+          <div class="text-xl font-medium border-b">1</div>
+          <div class="text-xl font-medium border-b">0</div>
+          <div>Time In</div>
+          <div>
+            <label for="1-2-candles" class="cursor-pointer">
+              <div>1-2 candles</div>
+              <input
+                type="radio"
+                v-model="timeIn"
+                value="2"
+                id="1-2-candles"
+                name="candles"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>
+            <label for="3-4-candles" class="cursor-pointer">
+              <div>3-4 candles</div>
+              <input
+                type="radio"
+                v-model="timeIn"
+                value="1"
+                id="3-4-candles"
+                name="candles"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>
+            <label for="4-candles" class="cursor-pointer">
+              <div>4+ candles</div>
+              <input
+                type="radio"
+                v-model="timeIn"
+                value="0"
+                id="4-candles"
+                name="candles"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>Speed Out</div>
+          <div>
+            <label for="fast" class="cursor-pointer">
+              <div>Fast</div>
+              <input
+                type="radio"
+                v-model="speedOut"
+                value="2"
+                id="fast"
+                name="speed"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>
+            <label for="average" class="cursor-pointer">
+              <div>Average</div>
+              <input
+                type="radio"
+                v-model="speedOut"
+                value="1"
+                id="average"
+                name="speed"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>
+            <label for="slow" class="cursor-pointer">
+              <div>Slow</div>
+              <input
+                type="radio"
+                v-model="speedOut"
+                value="0"
+                id="slow"
+                name="speed"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>Visits</div>
+          <div>
+            <label for="visits-0" class="cursor-pointer">
+              <div>0</div>
+              <input
+                type="radio"
+                v-model="visits"
+                value="2"
+                id="visits-0"
+                name="visits"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>
+            <label for="visits-1" class="cursor-pointer">
+              <div>1</div>
+              <input
+                type="radio"
+                v-model="visits"
+                value="1"
+                id="visits-1"
+                name="visits"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>
+            <label for="visits-1-plus" class="cursor-pointer">
+              <div>1+</div>
+              <input
+                type="radio"
+                v-model="visits"
+                value="0"
+                id="visits-1-plus"
+                name="visits"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>Ratio</div>
+          <div>
+            <label for="ratio-3-plus" class="cursor-pointer">
+              <div>3+</div>
+              <input
+                type="radio"
+                v-model="oddsRatio"
+                value="2"
+                id="ratio-3-plus"
+                name="ratio"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>
+            <label for="ratio-2" class="cursor-pointer">
+              <div>2</div>
+              <input
+                type="radio"
+                v-model="oddsRatio"
+                value="1"
+                id="ratio-2"
+                name="ratio"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+          <div>
+            <label for="ratio-less-than-2" class="cursor-pointer">
+              <div>< 2</div>
+              <input
+                type="radio"
+                v-model="oddsRatio"
+                value="0"
+                id="ratio-less-than-2"
+                name="ratio"
+                class="w-0 h-0 opacity-0 absolute"
+              />
+              <div class="w-8 h-8 bg-gray-300 rounded"></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="font-medium text-lg mt-3">
+          <span class="uppercase">Total:</span>
+          <span>{{oddsTotal}}</span>
+        </div>
+
+        <div class="mt-2 grid col-gap-6 row-gap-2 scores">
+          <div>7-8</div>
+          <div>Strong - take the trade</div>
+          <div>
+            <span v-if="oddsTotal == 7 || oddsTotal == 8"
+              >{{emoji}}</span
+            >
+          </div>
+          <div>5-6</div>
+          <div>Confirmation entry</div>
+          <div>
+            <span v-if="oddsTotal == 5 || oddsTotal == 6"
+              >{{emoji}}</span
+            >
+          </div>
+          <div>4 or less</div>
+          <div>Find the next level</div>
+          <div>
+            <span v-if="oddsTotal <= 4">{{emoji}}</span>
+          </div>
+        </div>
+
+        <h3 class="mt-5 mb-2 text-xl uppercase underline font-medium">
+          Quantity
+        </h3>
+
+        <section class="quantity grid items-center">
+          <label for="max-loss"
+            >Max you are willing to lose on any trade</label
+          >
+          <div></div>
+          <label for="quantity-risk">Risk</label>
+          <div></div>
+          <label for="quantity">Quantity</label>
+
+          <input
+            v-model="maxLoss"
+            id="max-loss"
+            class="border-black border-solid border-2 rounded px-1"
+          />
+          <span class="mx-1">/</span>
+          <input
+            v-model="risk"
+            id="quantity-risk"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+          <span class="mx-1">=</span>
+          <input
+            v-model="quantity"
+            id="quantity"
+            class="bg-gray-200 border-gray-200 border-solid border-2 rounded px-1"
+            disabled
+          />
+        </section>
+      </form>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  <script src="index.js"></script>
+</html>

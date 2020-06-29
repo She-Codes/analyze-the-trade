@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type='radio']:checked + div {
+  background-color: #4299e1;
+}
+
+.odds {
+  grid-template-columns: repeat(4, fit-content(200px));
+}
+
+section.stop {
+  grid-template-columns: repeat(7, fit-content(200px));
+}
+
+section.reward,
+section.risk,
+section.ratio,
+section.quantity {
+  grid-template-columns: repeat(5, fit-content(200px));
+}
+
+.scores {
+  grid-template-columns: repeat(3, fit-content(200px));
+}
